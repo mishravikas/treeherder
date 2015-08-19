@@ -440,3 +440,18 @@ SWAGGER_SETTINGS = {"enabled_methods": ['get', ]}
 REST_FRAMEWORK_EXTENSIONS = {
     'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15
 }
+
+PULSE_DATA_INGESTION_EXCHANGES = [
+  {
+      "exchange": "exchanges/taskcluster-treeherder/jobs",
+      "allowedProjects": [
+          'mozilla-central',
+          'mozilla-inbound'
+          # other repos TC can submit to
+      ],
+      "allowedSources": [
+         "taskcluster"
+      ]
+  }
+  #... // other CI systems
+]

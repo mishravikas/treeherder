@@ -1,0 +1,104 @@
+[
+  {
+    "project": "mozilla-inbound",
+    "job": {
+      "end_timestamp": 1387222817,
+      "submit_timestamp": 1387221298,
+      "start_timestamp": 1387221345,
+      "build_url": "",
+      "name": "SpiderMonkey --enable-sm-fail-on-warnings Build",
+      "option_collection": {
+        "opt": true
+      },
+      "artifacts": [
+        {
+          "job_guid": "d22c74d4aa6d2a1dcba96d95dccbd5fdca70cf33",
+          "type": "",
+          "name": "",
+          "blob": "some value"
+        }
+      ],
+      "machine_platform": {
+        "platform": "linux64",
+        "os_name": "linux",
+        "architecture": "x86_64"
+      },
+      "who": "spidermonkey_info__mozilla-inbound-warnaserr",
+      "group_symbol": "SM",
+      "reason": "scheduler",
+      "group_name": "SpiderMonkey",
+      "machine": "bld-linux64-ec2-104",
+      "state": "completed",
+      "log_references": [
+        {
+          "url": "http://ftp.mozilla.org/pub/mozilla.org/spidermonkey/tinderbox-builds/mozilla-inbound-linux64/mozilla-inbound_linux64_spidermonkey-warnaserr-bm57-build1-build352.txt.gz",
+          "parse_status": "pending",
+          "name": "builds-4h"
+        }
+      ],
+      "result": "success",
+      "build_platform": {
+        "platform": "linux64",
+        "os_name": "linux",
+        "architecture": "x86_64"
+      },
+      "job_symbol": "e",
+      "job_guid": "d22c74d4aa6d2a1dcba96d95dccbd5fdca70cf33",
+      "product_name": "spidermonkey",
+      "desc": "Linux x86-64 mozilla-inbound spidermonkey_info-warnaserr build"
+    },
+    "revision_hash": "4317d9e5759d58852485a7a808095a44bc806e19",
+    "coalesced": []
+  },
+  {
+    "project": "mozilla-inbound",
+    "job": {
+      "end_timestamp": 1387222972,
+      "submit_timestamp": 1387221298,
+      "start_timestamp": 1387221347,
+      "build_url": "",
+      "name": "SpiderMonkey --enable-sm-fail-on-warnings Build",
+      "option_collection": {
+        "opt": true
+      },
+      "artifacts": [
+        {
+          "job_guid": "875d7780dc5480287153f6bf8c1e23102ceff652",
+          "type": "",
+          "name": "",
+          "blob": "some value"
+        }
+      ],
+      "machine_platform": {
+        "platform": "linux32",
+        "os_name": "linux",
+        "architecture": "x86"
+      },
+      "who": "spidermonkey_info__mozilla-inbound-warnaserr",
+      "group_symbol": "SM",
+      "reason": "scheduler",
+      "group_name": "SpiderMonkey",
+      "machine": "bld-linux64-ec2-051",
+      "state": "completed",
+      "log_references": [
+        {
+          "url": "http://ftp.mozilla.org/pub/mozilla.org/spidermonkey/tinderbox-builds/mozilla-inbound-linux/mozilla-inbound_linux_spidermonkey-warnaserr-bm63-build1-build226.txt.gz",
+          "parse_status": "pending",
+          "name": "builds-4h"
+        }
+      ],
+      "result": "success",
+      "build_platform": {
+        "platform": "linux32",
+        "os_name": "linux",
+        "architecture": "x86"
+      },
+      "job_symbol": "e",
+      "job_guid": "875d7780dc5480287153f6bf8c1e23102ceff652",
+      "product_name": "spidermonkey",
+      "desc": "Linux mozilla-inbound spidermonkey_info-warnaserr build"
+    },
+    "revision_hash": "4317d9e5759d58852485a7a808095a44bc806e19",
+    "coalesced": []
+  }
+]

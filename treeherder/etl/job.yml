@@ -1,0 +1,294 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+title: "Job Definition"
+description: |
+  Definition of a single job that can be added to Treeherder
+  Project is determined by the routing key, so we don't need to specify it here.
+id: "jobDefinition"
+type: "object"
+properties:
+  project:
+    title: "project"
+    description: |
+      The Project Repository name
+    type: "string"
+    pattern: "^[A-Za-z0-9_-]+$"
+    minLength: 1
+    maxLength: 50
+
+  jobGuid:
+    title: "jobGuid"
+    type: "string"
+    pattern: "^[A-Za-z0-9_/+-]+$"
+    minLength: 1
+    maxLength: 50
+
+  revision:
+    title: "revision"
+    type: "string"
+    minLength: 1
+    maxLength: 50
+
+  display:
+    jobSymbol:
+      title: "jobSymbol"
+      type: "string"
+      pattern: "^[A-Za-z0-9_-]+$"
+      minLength: 1
+      maxLength: 25
+    groupSymbol:
+      title: "group symbol"
+      type: "string"
+      pattern: "^[A-Za-z0-9_-]+$"
+      minLength: 1
+      maxLength: 25
+
+  status:
+    title: "status"
+    description: |
+      coalesced: The job was not run and coalesced to another identical build
+      completed: Job ran through to completion
+      pending: not yet started
+      running: currently in progress
+      fail: A failure
+      exception: An infrastructure error/exception
+      retry: The job was automatically retried by the CI system
+      success: Build/Test executed without error or failure
+      unknown: Unknown error with job
+      usercancel: The job was cancelled by a user
+    type: "string"
+    enum:
+      - unscheduled
+      - coalesced
+      - completed
+      - pending
+      - running
+      - success
+      - fail
+      - exception
+      - retry
+      - canceled
+  jobKind:
+    type: "string"
+    enum:
+      - build
+      - test
+  retryOf:
+    description: The jobGuid that this job is retrying.
+    type: "string"
+
+
+# todo: datetime vs unix timestamp
+  # time data
+  scheduled:
+    title: "submit time"
+    type: "date-time"
+  started:
+    title: "start time"
+    type: "date-time"
+  completed:
+    title: "end time"
+    type: "date-time"
+
+
+  optionCollection:
+    title: "option collection"
+    description: |
+      Options are a dimension of a platform.  The values here can vary wildly,
+      so most strings are valid for this.  The list of options that are used
+      is maleable going forward.
+
+      Some examples of options that have been used:
+        opt    Optimize Compiler GCC optimize flags
+        debug  Debug flags passed in
+        pgo    Profile Guided Optimization - Like opt, but runs with profiling, then builds again using that profiling
+        asan   Address Sanitizer
+        tsan   Thread Sanitizer Build
+    type: "array"
+    items:
+      type: "string"
+      minLength: 1
+      maxLength: 50
+      pattern: "^[A-Za-z0-9_-]+$"
+
+
+  who:
+    title: "who"
+    type: "email"
+    minLength: 1
+    maxLength: 50
+  reason:
+    title: "reason"
+    type: "string"
+    minLength: 1
+    maxLength: 125
+
+
+  machine:
+    title: "machine"
+    type: "string"
+    pattern: "^[A-Za-z0-9_-]+$"
+    minLength: 1
+    maxLength: 50
+  machinePlatform:
+    title: "machine platform"
+    type: "object"
+    properties:
+      platform:
+        title: "platform"
+        type: "string"
+        minLength: 1
+        maxLength: 25
+      osName:
+        title: "os name"
+        type: "string"
+        minLength: 1
+        maxLength: 25
+      architecture:
+        title: "architecture"
+        type: "string"
+        minLength: 1
+        maxLength: 25
+    required:
+      - platform
+      - os_name
+      - architecture
+  buildPlatform:
+    title: "build platform"
+    type: "object"
+    properties:
+      platform:
+        title: "platform"
+        type: "string"
+        minLength: 1
+        maxLength: 25
+      osName:
+        title: "osName"
+        type: "string"
+        minLength: 1
+        maxLength: 25
+      architecture:
+        title: "architecture"
+        type: "string"
+        minLength: 1
+        maxLength: 25
+
+
+  artifacts:
+    type: array
+
+  logReferences:
+    title: "log references"
+    type: "array"
+    items:
+      title: "log reference"
+      type: "object"
+      properties:
+        url:
+          title: "url"
+          type: "uri"
+          minLength: 1
+          maxLength: 255
+        parse_status:
+          title: "parse_status"
+          description: |
+            error:    There was an error parsing the log
+            parsed:   The log is already parsed and does not need further parsing by Treeherder
+            pending:  Treeherder should parse the log
+          type: "string"
+          enum:
+            - error
+            - parsed
+            - pending
+        name:
+          title: "name"
+          type: "string"
+          minLength: 1
+          maxLength: 50
+      required:
+        - url
+        - name
+
+
+# do we even use this for anything after ingestion?
+  productName:
+    title: "productName"
+    type: "string"
+    minLength: 1
+    maxLength: 50
+    required:
+      - platform
+      - os_name
+      - architecture
+
+
+# could do without these if we require job type and group to exist prior
+  jobName:
+    title: "job name"
+    type: "string"
+    minLength: 1
+    maxLength: 100
+  groupName:
+    title: "group name"
+    type: "string"
+    pattern: "^[A-Za-z0-9_-]+$"
+    minLength: 1
+    maxLength: 100
+
+
+
+
+
+additionalProperties: false
+required:
+  - revision
+
+  - jobGuid
+  - jobSymbol
+  - groupSymbol
+  - state
+  - machinePlatform
+  - machine
+  - reason
+  - who
+
+
+  coalesced:
+    title: "coalesced"
+    type: "array"
+    items:
+      title: "job guid"
+      type: "string"
+      pattern: "^[A-Za-z0-9_/+-]+$"
+      minLength: 1
+      maxLength: 50
+
+
+
+
+
+
+
+
+title: "artifact"
+type: "object"
+properties:
+  type:
+    title: "type"
+    type: "string"
+    enum:
+      - json
+      - text
+  name:
+    title: "name"
+    type: "string"
+    minLength: 1
+    maxLength: 50
+  blob:
+    title: "blob"
+    type: "string"
+    minLength: 1
+    maxLength: 1024
+required:
+  - type
+  - name
+  - blob

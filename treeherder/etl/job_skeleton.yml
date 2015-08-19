@@ -1,0 +1,120 @@
+id: "job"
+type: "object"
+properties:
+  jobGuid:
+  origin:
+    project:
+    revision:
+    vcsID:
+
+  display:
+    jobSymbol:
+    groupSymbol:
+    # could do without these if we require job type and group to exist prior
+    jobName:
+    groupName:
+
+  status:
+    enum:
+      - unscheduled
+      - coalesced
+      - completed
+      - pending
+      - running
+      - success
+      - fail
+      - exception
+      - retry
+      - canceled
+  jobKind:
+    enum:
+      - build
+      - test
+  retryOf:
+    description: The jobGuid that this job is retrying.
+  coalesced:
+    description: The jobGuids coalesced to this job.  Could do this the other direction, instead.
+
+  times:
+    scheduled:
+    started:
+    completed:
+
+  optionCollection:
+  who:
+    type: "email"
+  reason:
+
+  machine:
+    build:
+      machineName:
+      platform:
+      osName:
+      architecture:
+    run:
+      machineName:
+      platform:
+      osName:
+      architecture:
+
+  artifacts:
+    type: array
+  logReferences:
+    items:
+      properties:
+        url:
+        parse_status:
+        name:
+      required:
+        - url
+        - name
+
+# do we even use this for anything after ingestion?
+  productName:
+
+
+additionalProperties: false
+required:
+  - revision
+
+  - jobGuid
+  - jobSymbol
+  - groupSymbol
+  - state
+  - machinePlatform
+  - machine
+  - reason
+  - who
+
+
+
+
+
+
+
+
+
+
+title: "artifact"
+type: "object"
+properties:
+  type:
+    title: "type"
+    type: "string"
+    enum:
+      - json
+      - text
+  name:
+    title: "name"
+    type: "string"
+    minLength: 1
+    maxLength: 50
+  blob:
+    title: "blob"
+    type: "string"
+    minLength: 1
+    maxLength: 1024
+required:
+  - type
+  - name
+  - blob
